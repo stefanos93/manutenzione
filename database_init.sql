@@ -66,3 +66,25 @@ CREATE TABLE IF NOT EXIST punti_checklist (
     tipo_risultato ENUM('binario', 'valore_numerico') NOT NULL DEFAULT 'binario',
     FOREIGN KEY (checklist_id) REFERENCES checklist(id) ON DELETE CASCADE
 );
+
+-- Creazione della tabella per i risultati delle checklist
+CREATE TABLE IF NOT EXIST risultati_checklist (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id INT,
+    entita_id INT,
+    data_completamento DATE,
+    risultato TEXT,
+    stato ENUM('incompleta', 'completa') NOT NULL DEFAULT 'incompleta',
+    FOREIGN KEY (checklist_id) REFERENCES checklist(id) ON DELETE CASCADE,
+    FOREIGN KEY (entita_id) REFERENCES entita(id) ON DELETE CASCADE
+);
+
+-- Creazione della tabella per le scadenze delle checklist
+CREATE TABLE IF NOT EXIST scadenze_checklist (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    checklist_id INT,
+    entita_id INT,
+    data_scadenza DATE,
+    FOREIGN KEY (checklist_id) REFERENCES checklist(id) ON DELETE CASCADE,
+    FOREIGN KEY (entita_id) REFERENCES entita(id) ON DELETE CASCADE
+);
